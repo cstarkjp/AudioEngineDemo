@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AudioEngineDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Volume" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUZ-GK-h3J" userLabel="Volume">
+                                <rect key="frame" x="32" y="355.5" width="54.5" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dcz-UD-ren" userLabel="Volume meter" customClass="LevelMeterView" customModule="AudioEngineDemo" customModuleProvider="target">
+                                <rect key="frame" x="32" y="389" width="256" height="50"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="7bE-Ev-TqG"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="27" translatesAutoresizingMaskIntoConstraints="NO" id="tfT-pm-CSl">
+                                <rect key="frame" x="86.5" y="465" width="147" height="34"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9M-xA-eNZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="F3K-9Z-XmI"/>
+                                            <constraint firstAttribute="height" constant="34" id="yZZ-Rf-vgd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="f9M-26-0yG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOm-kf-ggl">
+                                        <rect key="frame" x="87" y="0.0" width="60" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="lia-ac-fFh"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="wbS-ei-Nkk"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="1wy-jF-Ecp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="JXv-jy-Cql"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="tfT-pm-CSl" firstAttribute="top" secondItem="dcz-UD-ren" secondAttribute="bottom" constant="26" id="L2t-Bi-PNF"/>
+                            <constraint firstItem="dcz-UD-ren" firstAttribute="centerX" secondItem="tfT-pm-CSl" secondAttribute="centerX" id="OML-Nq-Xzi"/>
+                            <constraint firstItem="dcz-UD-ren" firstAttribute="top" secondItem="wUZ-GK-h3J" secondAttribute="bottom" constant="14" id="Q1R-ch-Ppe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tfT-pm-CSl" secondAttribute="bottom" constant="20" id="i6z-2u-gS3"/>
+                            <constraint firstItem="tfT-pm-CSl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jnm-cC-qJc"/>
+                            <constraint firstItem="dcz-UD-ren" firstAttribute="leading" secondItem="wUZ-GK-h3J" secondAttribute="leading" id="lLN-X2-dp5"/>
+                            <constraint firstItem="wUZ-GK-h3J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="obU-52-xjr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wUZ-GK-h3J" secondAttribute="trailing" symbolic="YES" id="w6F-Gg-6FA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="playButton" destination="hOm-kf-ggl" id="RAe-jf-YVj"/>
+                        <outlet property="recordButton" destination="G9M-xA-eNZ" id="4CI-Ab-Od4"/>
+                        <outlet property="voiceIOMeter" destination="dcz-UD-ren" id="wyp-Yo-4gl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="133.59999999999999" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+</document>
