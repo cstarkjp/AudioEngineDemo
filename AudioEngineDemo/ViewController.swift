@@ -108,10 +108,10 @@ class ViewController: UIViewController {
             print("Creating audio engine class instance")
             audioEngine = try AudioEngine()
 
-            voiceIOMeter.levelProvider = audioEngine.voiceIOPowerMeter
+            voiceIOMeter.levelProvider = audioEngine.volumeMeter
 
             print("Setting up audio engine session")
-            setupAudioSession(sampleRate: audioEngine.voiceIOFormat.sampleRate)
+            setupAudioSession(sampleRate: audioEngine.audioFormat.sampleRate)
 
             print("Setting up audio engine")
             audioEngine.setupEngine()

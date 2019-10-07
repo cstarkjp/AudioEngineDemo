@@ -15,7 +15,7 @@
 		324635A621F142B10047E05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 324635A521F142B10047E05A /* Assets.xcassets */; };
 		324635A921F142B10047E05A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 324635A721F142B10047E05A /* LaunchScreen.storyboard */; };
 		3265619122899B1200ADCC03 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3265619022899B1200ADCC03 /* README.md */; };
-		32CD7FC8227F313E003FF140 /* PowerMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD7FC7227F313E003FF140 /* PowerMeter.swift */; };
+		32CD7FC8227F313E003FF140 /* VolumeMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CD7FC7227F313E003FF140 /* VolumeMeter.swift */; };
 		32DB914D2281AC6A00A146AB /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DB914C2281AC6A00A146AB /* AudioEngine.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +30,7 @@
 		324635A821F142B10047E05A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		324635AA21F142B10047E05A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3265619022899B1200ADCC03 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		32CD7FC7227F313E003FF140 /* PowerMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerMeter.swift; sourceTree = "<group>"; };
+		32CD7FC7227F313E003FF140 /* VolumeMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMeter.swift; sourceTree = "<group>"; };
 		32DB914C2281AC6A00A146AB /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		8E6524408E65249000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		9034CC709034C82000000001 /* LICENSE_Apple.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE_Apple.txt; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 			children = (
 				32DB914C2281AC6A00A146AB /* AudioEngine.swift */,
 				324635A021F142B00047E05A /* ViewController.swift */,
-				32CD7FC7227F313E003FF140 /* PowerMeter.swift */,
+				32CD7FC7227F313E003FF140 /* VolumeMeter.swift */,
 				32219DF92280D6B8007B1CA1 /* MeterTable.swift */,
 				32219DFB2280D6C8007B1CA1 /* LevelMeterView.swift */,
 				3246359E21F142B00047E05A /* AppDelegate.swift */,
@@ -177,7 +177,7 @@
 				324635A121F142B00047E05A /* ViewController.swift in Sources */,
 				3246359F21F142B00047E05A /* AppDelegate.swift in Sources */,
 				32219DFC2280D6C8007B1CA1 /* LevelMeterView.swift in Sources */,
-				32CD7FC8227F313E003FF140 /* PowerMeter.swift in Sources */,
+				32CD7FC8227F313E003FF140 /* VolumeMeter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

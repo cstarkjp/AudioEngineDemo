@@ -35,8 +35,8 @@ class AudioEngine {
     // MARK: - Variables
     
     /// Number of microphone channels: mono = 1, stereo = 2.
-    let nMicChannels: AVAudioChannelCount = 1
-    let nMicTapBuffer: AVAudioFrameCount = 256
+    let nChannels: AVAudioChannelCount = 1
+    let nBuffer: AVAudioFrameCount = 256
     
     /// Either request a sample rate here (which must be consistent with the hardware rate, e.g., 48_000), or leave unset (nil) in which case the hardware rate is auto-detected. The latter doesn't work well on simulators.
     let desiredSampleRate: Double? = 48_000 // 48_000
@@ -46,17 +46,16 @@ class AudioEngine {
                                        relativeTo: URL(fileURLWithPath: NSTemporaryDirectory()) )
     private var recordedFilePlayer = AVAudioPlayerNode()
     private var avAudioEngine = AVAudioEngine()
-    private var isNewRecordingAvailable = false
-    private var fileFormat: AVAudioFormat
+    private var haveNewRecording = false
     private var recordedFile: AVAudioFile?
 
-    public private(set) var voiceIOFormat: AVAudioFormat
+    public private(set) var audioFormat: AVAudioFormat
     public private(set) var isRecording = false
-    public private(set) var voiceIOPowerMeter = PowerMeter()
+    public private(set) var volumeMeter = VolumeMeter()
 
     private enum AudioEngineError: Error {
         case bufferRetrieveError
-        case fileFormatError
+        case audioFormatError
         case audioFileNotFound
     }
     
@@ -76,7 +75,7 @@ class AudioEngine {
      - Similarly set file format sample rate.
      - Also set number of channels (probably overriding stereo).
      
-     - Throws: `AudioEngineError.fileFormatError` if `AVAudioFormat` cannot be set as needed.
+     - Throws: `AudioEngineError.audioFormatError` if `AVAudioFormat` cannot be set as needed.
      */
     init() throws {
         avAudioEngine.attach(recordedFilePlayer)
@@ -93,22 +92,13 @@ class AudioEngine {
         print( "Specified sample rate = \(String(describing: desiredSampleRate)) => \(hwSampleRate)" )
         print( "Number of audio channels = \(AVAudioSession.sharedInstance().inputNumberOfChannels)" )
 
-        guard let tempVoiceIOFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,
-                                                    sampleRate: sampleRate,
-                                                    channels: nMicChannels,
-                                                    interleaved: false)
-            else { throw AudioEngineError.fileFormatError }
-        voiceIOFormat = tempVoiceIOFormat
-        print("Voice IO format: \(String(describing: voiceIOFormat))")
-        
-        // Audio files _must_ be interleaved
-        guard let tempFileFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32,
-                                                 sampleRate: sampleRate,
-                                                 channels: nMicChannels,
-                                                 interleaved: true)
-            else { throw AudioEngineError.fileFormatError }
-        fileFormat = tempFileFormat
-        print("File format: \(String(describing: fileFormat))")
+        guard let tempAudioFormat = AVAudioFormat( commonFormat: .pcmFormatFloat32,
+                                                   sampleRate: sampleRate,
+                                                   channels: nChannels,
+                                                   interleaved: false )
+            else { throw AudioEngineError.audioFormatError }
+        audioFormat = tempAudioFormat
+        print("Audio format: \(String(describing: audioFormat))")
     }
 
     /**
@@ -120,13 +110,13 @@ class AudioEngine {
         let output = avAudioEngine.outputNode
 
         print("Connecting recorded file player")
-        avAudioEngine.connect(recordedFilePlayer, to: mixer, format: voiceIOFormat)
+        avAudioEngine.connect(recordedFilePlayer, to: mixer, format: audioFormat)
 
         print("Connecting mixer")
-        avAudioEngine.connect(mixer, to: output, format: voiceIOFormat)
+        avAudioEngine.connect(mixer, to: output, format: audioFormat)
 
         print("Installing mic tap")
-        input.installTap(onBus: 0, bufferSize: nMicTapBuffer, format: voiceIOFormat) { buffer, timeStamp in
+        input.installTap(onBus: 0, bufferSize: nBuffer, format: audioFormat) { buffer, timeStamp in
             if self.isRecording {
                 do {
                     print("Writing to file: \(buffer), \(timeStamp)")
@@ -134,12 +124,11 @@ class AudioEngine {
                 } catch {
                     print("Could not write buffer: \(error)")
                 }
-                self.voiceIOPowerMeter.process(buffer: buffer)
+                self.volumeMeter.process(buffer: buffer)
             } else {
-                self.voiceIOPowerMeter.processSilence()
+                self.volumeMeter.processSilence()
             }
         }
-        
         print("Prepping audio engine")
         avAudioEngine.prepare()
     }
@@ -173,8 +162,8 @@ class AudioEngine {
         } else {
             recordedFilePlayer.stop()
             do {
-                recordedFile = try AVAudioFile(forWriting: recordedFileURL, settings: fileFormat.settings)
-                isNewRecordingAvailable = true
+                recordedFile = try AVAudioFile(forWriting: recordedFileURL, settings: audioFormat.settings)
+                haveNewRecording = true
                 isRecording = true
             } catch {
                 print("Could not create file for recording: \(error)")
@@ -199,11 +188,11 @@ class AudioEngine {
         if recordedFilePlayer.isPlaying {
             recordedFilePlayer.pause()
         } else {
-            if isNewRecordingAvailable {
+            if haveNewRecording {
                 guard let recordedBuffer = AudioEngine.fetchFileIntoBuffer(fileURL: recordedFileURL) else { return }
                 print("togglePlaying: buffer length = \(recordedBuffer.frameLength), buffer capacity = \(recordedBuffer.frameCapacity), format = \(recordedBuffer.format)")
                 recordedFilePlayer.scheduleBuffer(recordedBuffer, at: nil, options: .loops)
-                isNewRecordingAvailable = false
+                haveNewRecording = false
             }
             recordedFilePlayer.play()
         }
@@ -211,11 +200,15 @@ class AudioEngine {
     
     /**
      Get audio file and put into `AVAudioPCMBuffer` so we can play it back.
+     
+     - Parameter fileURL: Internal "path" to temporary audio file.
+     
+     - Returns: `AVAudioPCMBuffer` filled with the temp file audio data, or `nil` if failure.
      */
-    static func fetchFileIntoBuffer(fileURL: URL) -> AVAudioPCMBuffer? {
+    static func fetchFileIntoBuffer( fileURL: URL ) -> AVAudioPCMBuffer? {
         let file: AVAudioFile!
         do {
-            try file = AVAudioFile(forReading: fileURL)
+            try file = AVAudioFile( forReading: fileURL )
         } catch {
             print("fetchFileIntoBuffer: Could not load file: \(error)")
             return nil
@@ -223,8 +216,9 @@ class AudioEngine {
         file.framePosition = 0
         print("fetchFileIntoBuffer: \(file.fileFormat)  length = \(file.length)")
 
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat,
-                                            frameCapacity: AVAudioFrameCount(file.length)) else { return nil }
+        guard let buffer = AVAudioPCMBuffer( pcmFormat: file.processingFormat,
+                                             frameCapacity: AVAudioFrameCount(file.length) )
+            else { return nil }
         do {
             try file.read(into: buffer)
         } catch {

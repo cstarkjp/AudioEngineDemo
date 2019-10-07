@@ -1,5 +1,5 @@
 //
-//  PowerMeter.swift
+//  VolumeMeter.swift
 //  AudioEngineDemo
 //
 //  Modified by Colin Stark on 2019/10/02.
@@ -18,23 +18,23 @@ import AVFoundation
 import Accelerate
 
 
-// MARK: - PowerMeter class
+// MARK: - VolumeMeter class
 
 /**
  Compute the audio "power" or volume.
  */
-class PowerMeter: AudioLevelProvider {
+class VolumeMeter: AudioLevelProvider {
     
     // MARK: - Variables
 
     private let kMinLevel: Float = 0.000_000_01 //-160 dB
 
-    private struct PowerLevels {
+    private struct VolumeLevels {
         let average: Float
         let peak: Float
     }
 
-    private var values = [PowerLevels]()
+    private var values = [VolumeLevels]()
     
     private var meterTableAvarage = MeterTable()
     private var meterTablePeak = MeterTable()
@@ -54,13 +54,13 @@ class PowerMeter: AudioLevelProvider {
 
     // Calculates average (rms) and peak level of each channel in pcm buffer and caches data
     func process(buffer: AVAudioPCMBuffer) {
-        var powerLevels = [PowerLevels]()
+        var volumeLevels = [VolumeLevels]()
         let channelCount = Int(buffer.format.channelCount)
         let length = vDSP_Length(buffer.frameLength)
 
         if let floatData = buffer.floatChannelData {
             for channel in 0..<channelCount {
-                powerLevels.append(calculatePowers(data: floatData[channel], strideFrames: buffer.stride, length: length))
+                volumeLevels.append(calculateVolumes(data: floatData[channel], strideFrames: buffer.stride, length: length))
             }
         } else if let int16Data = buffer.int16ChannelData {
             for channel in 0..<channelCount {
@@ -70,7 +70,7 @@ class PowerMeter: AudioLevelProvider {
                 var scalar = Float(INT16_MAX)
                 vDSP_vsdiv(floatChannelData, buffer.stride, &scalar, &floatChannelData, buffer.stride, length)
 
-                powerLevels.append(calculatePowers(data: floatChannelData, strideFrames: buffer.stride, length: length))
+                volumeLevels.append(calculateVolumes(data: floatChannelData, strideFrames: buffer.stride, length: length))
             }
         } else if let int32Data = buffer.int32ChannelData {
             for channel in 0..<channelCount {
@@ -80,13 +80,13 @@ class PowerMeter: AudioLevelProvider {
                 var scalar = Float(INT32_MAX)
                 vDSP_vsdiv(floatChannelData, buffer.stride, &scalar, &floatChannelData, buffer.stride, length)
 
-                powerLevels.append(calculatePowers(data: floatChannelData, strideFrames: buffer.stride, length: length))
+                volumeLevels.append(calculateVolumes(data: floatChannelData, strideFrames: buffer.stride, length: length))
             }
         }
-        self.values = powerLevels
+        self.values = volumeLevels
     }
 
-    private func calculatePowers(data: UnsafePointer<Float>, strideFrames: Int, length: vDSP_Length) -> PowerLevels {
+    private func calculateVolumes(data: UnsafePointer<Float>, strideFrames: Int, length: vDSP_Length) -> VolumeLevels {
         var max: Float = 0.0
         vDSP_maxv(data, strideFrames, &max, length)
         if max < kMinLevel {
@@ -99,6 +99,6 @@ class PowerMeter: AudioLevelProvider {
             rms = kMinLevel
         }
 
-        return PowerLevels(average: 20.0 * log10(rms), peak: 20.0 * log10(max))
+        return VolumeLevels(average: 20.0 * log10(rms), peak: 20.0 * log10(max))
     }
 }
