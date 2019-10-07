@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupAudioEngine()
+        createAudioEngine()
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.handleInterruption(_:)),
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func setupAudioEngine() {
+    func createAudioEngine() {
         do {
             print("Creating audio engine class instance")
             audioEngine = try AudioEngine()
@@ -114,10 +114,10 @@ class ViewController: UIViewController {
             setupAudioSession(sampleRate: audioEngine.voiceIOFormat.sampleRate)
 
             print("Setting up audio engine")
-            audioEngine.setup()
+            audioEngine.setupEngine()
             
             print("Starting up audio engine session")
-            audioEngine.start()
+            audioEngine.startEngine()
         } catch {
             fatalError("Could not set up audio engine: \(error)")
         }
@@ -207,7 +207,7 @@ class ViewController: UIViewController {
     func handleMediaServicesWereReset(_ notification: Notification) {
         resetUIStates()
         resetAudioEngine()
-        setupAudioEngine()
+        createAudioEngine()
     }
     
 }

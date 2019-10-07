@@ -178,7 +178,7 @@
     {
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/ViewController.swift",
       "line": 106,
-      "symbol": "ViewController.setupAudioEngine()",
+      "symbol": "ViewController.createAudioEngine()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },

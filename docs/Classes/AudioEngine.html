@@ -264,6 +264,33 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15AudioEngineDemo0aB0C9isPlayingSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isPlaying" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15AudioEngineDemo0aB0C9isPlayingSbvp">isPlaying</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Query if playback is happening.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isPlaying</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -292,12 +319,7 @@
 <li>Get the audio capture hardware rate.</li>
 <li>Set the voice I/O sample rate to this rate, unless another is specified.</li>
 <li>Similarly set file format sample rate.</li>
-<li>Also set number of channels (probably overriding stereo).</li>
-<div class="aside aside-important">
-    <p class="aside-title">Important</p>
-    <p>add an observer that triggers whenever the <code>AVAudioEngine</code> config is changed.</p>
-
-</div>
+<li><p>Also set number of channels (probably overriding stereo).</p></li>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     <p><code>AudioEngineError.fileFormatError</code> if <code>AVAudioFormat</code> cannot be set as needed.</p>
@@ -319,36 +341,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15AudioEngineDemo0aB0C19fetchFileIntoBuffer7fileURLSo16AVAudioPCMBufferCSg10Foundation0I0V_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/fetchFileIntoBuffer(fileURL:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15AudioEngineDemo0aB0C19fetchFileIntoBuffer7fileURLSo16AVAudioPCMBufferCSg10Foundation0I0V_tFZ">fetchFileIntoBuffer(fileURL:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get audio file and put into <code>AVAudioPCMBuffer</code> so we can play it back.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">fetchFileIntoBuffer</span><span class="p">(</span><span class="nv">fileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AVAudioPCMBuffer</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15AudioEngineDemo0aB0C5setupyyF"></a>
-                    <a name="//apple_ref/swift/Method/setup()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15AudioEngineDemo0aB0C5setupyyF">setup()</a>
+                    <a name="/s:15AudioEngineDemo0aB0C05setupB0yyF"></a>
+                    <a name="//apple_ref/swift/Method/setupEngine()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15AudioEngineDemo0aB0C05setupB0yyF">setupEngine()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -363,7 +358,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setupEngine</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -373,9 +368,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15AudioEngineDemo0aB0C5startyyF"></a>
-                    <a name="//apple_ref/swift/Method/start()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15AudioEngineDemo0aB0C5startyyF">start()</a>
+                    <a name="/s:15AudioEngineDemo0aB0C05startB0yyF"></a>
+                    <a name="//apple_ref/swift/Method/startEngine()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15AudioEngineDemo0aB0C05startB0yyF">startEngine()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -390,7 +385,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">start</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">startEngine</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -481,33 +476,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15AudioEngineDemo0aB0C9isPlayingSbvp"></a>
-                    <a name="//apple_ref/swift/Property/isPlaying" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15AudioEngineDemo0aB0C9isPlayingSbvp">isPlaying</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Query if playback is happening.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">isPlaying</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:15AudioEngineDemo0aB0C13togglePlayingyyF"></a>
                     <a name="//apple_ref/swift/Method/togglePlaying()" class="dashAnchor"></a>
                     <a class="token" href="#/s:15AudioEngineDemo0aB0C13togglePlayingyyF">togglePlaying()</a>
@@ -526,6 +494,33 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">togglePlaying</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15AudioEngineDemo0aB0C19fetchFileIntoBuffer7fileURLSo16AVAudioPCMBufferCSg10Foundation0I0V_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/fetchFileIntoBuffer(fileURL:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15AudioEngineDemo0aB0C19fetchFileIntoBuffer7fileURLSo16AVAudioPCMBufferCSg10Foundation0I0V_tFZ">fetchFileIntoBuffer(fileURL:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get audio file and put into <code>AVAudioPCMBuffer</code> so we can play it back.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">fetchFileIntoBuffer</span><span class="p">(</span><span class="nv">fileURL</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AVAudioPCMBuffer</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
