@@ -21,6 +21,8 @@ import Foundation
  Container for processing audio volume.
  */
 struct MeterTable {
+    
+    // MARK: - Variables
 
     /// The decibel value of the minimum displayed amplitude
     private let kMinDB: Float = -60.0
@@ -31,6 +33,8 @@ struct MeterTable {
     private let scaleFactor: Float
     private var meterTable = [Float]()
     
+    // MARK: - Methods
+
     init() {
         let dbResolution = kMinDB / Float(tableSize - 1)
         scaleFactor = 1.0 / dbResolution

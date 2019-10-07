@@ -32,6 +32,9 @@ import Foundation
  */
 class AudioEngine {
     
+    // MARK: - Variables
+    
+    /// Number of microphone channels: mono = 1, stereo = 2.
     let nMicChannels: AVAudioChannelCount = 2
     let nMicTapBuffer: AVAudioFrameCount = 256
     
@@ -57,6 +60,17 @@ class AudioEngine {
         case audioFileNotFound
     }
 
+    // MARK: - Methods
+    /**
+     Initialize through doing the following:
+     - Get the audio capture hardware rate.
+     - Set the voice I/O sample rate to this rate, unless another is specified.
+     - Similarly set file format sample rate.
+     - Also set number of channels (probably overriding stereo).
+     - Important: add an observer that triggers whenever the `AVAudioEngine` config is changed.
+     
+     - Throws: `AudioEngineError.fileFormatError` if `AVAudioFormat` cannot be set as needed.
+     */
     init() throws {
         avAudioEngine.attach(recordedFilePlayer)
         print("Record file URL: \(recordedFileURL.absoluteString)")
@@ -89,6 +103,7 @@ class AudioEngine {
         fileFormat = tempFileFormat
         print("File format: \(String(describing: fileFormat))")
 
+        // Trigger `configChanged` function if the `AVAudioEngine` config is changed.
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(configChanged(_:)),
                                                name: .AVAudioEngineConfigurationChange,
@@ -96,34 +111,45 @@ class AudioEngine {
         print("Added observer to monitor any change in config")
     }
 
+    /**
+     Function triggered by observer if `AVAudioEngine` config is changed.
+     
+     - Parameter notification: Provided by the observer.
+     */
     @objc
     private func configChanged(_ notification: Notification) {
         checkEngineIsRunning()
     }
 
-    static func getBuffer(fileURL: URL) -> AVAudioPCMBuffer? {
+    /**
+     Get audio file and put into `AVAudioPCMBuffer` so we can play it back.
+     */
+    static func fetchFileIntoBuffer(fileURL: URL) -> AVAudioPCMBuffer? {
         let file: AVAudioFile!
         do {
             try file = AVAudioFile(forReading: fileURL)
         } catch {
-            print("getBuffer: Could not load file: \(error)")
+            print("fetchFileIntoBuffer: Could not load file: \(error)")
             return nil
         }
         file.framePosition = 0
-        print("getBuffer: \(file.fileFormat)  length = \(file.length)")
+        print("fetchFileIntoBuffer: \(file.fileFormat)  length = \(file.length)")
 
         guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat,
                                             frameCapacity: AVAudioFrameCount(file.length)) else { return nil }
         do {
             try file.read(into: buffer)
         } catch {
-            print("getBuffer: Could not load file into buffer: \(error)")
+            print("fetchFileIntoBuffer: Could not load file into buffer: \(error)")
             return nil
         }
         file.framePosition = 0
         return buffer
     }
 
+    /**
+     Connect up the voice input, mixer and voice output nodes, and install a mic tap, then prep the `AVAudioEngine`.
+     */
     func setup() {
         let input = avAudioEngine.inputNode
         let mixer = avAudioEngine.mainMixerNode
@@ -154,6 +180,9 @@ class AudioEngine {
         avAudioEngine.prepare()
     }
 
+    /**
+     Start the `AVAudioEngine`.
+     */
     func start() {
         do {
             try avAudioEngine.start()
@@ -162,12 +191,18 @@ class AudioEngine {
         }
     }
 
+    /**
+     Check that `AVAudioEngine` is running.
+     */
     func checkEngineIsRunning() {
         if !avAudioEngine.isRunning {
             start()
         }
     }
 
+    /**
+     Turn on or off the recording of audio to a file.
+     */
     func toggleRecording() {
         if isRecording {
             isRecording = false
@@ -183,23 +218,32 @@ class AudioEngine {
         }
     }
 
+    /**
+     Explicitly stop audio file playback and flag to stop recording.
+     */
     func stopRecordingAndPlayers() {
         if isRecording {
             isRecording = false
         }
         recordedFilePlayer.stop()
     }
-
+    
+    /**
+     Query if playback is happening.
+     */
     var isPlaying: Bool {
         return recordedFilePlayer.isPlaying
     }
 
+    /**
+     Turn audio playback on or off (by pausing it).
+     */
     func togglePlaying() {
         if recordedFilePlayer.isPlaying {
             recordedFilePlayer.pause()
         } else {
             if isNewRecordingAvailable {
-                guard let recordedBuffer = AudioEngine.getBuffer(fileURL: recordedFileURL) else { return }
+                guard let recordedBuffer = AudioEngine.fetchFileIntoBuffer(fileURL: recordedFileURL) else { return }
                 print("togglePlaying: length = \(recordedBuffer.frameLength), capacity = \(recordedBuffer.frameCapacity), \(recordedBuffer.format)")
                 recordedFilePlayer.scheduleBuffer(recordedBuffer, at: nil, options: .loops)
                 isNewRecordingAvailable = false

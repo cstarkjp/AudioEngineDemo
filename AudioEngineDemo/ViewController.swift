@@ -23,6 +23,8 @@ import AVFoundation.AVFAudio
  */
 class ViewController: UIViewController {
     
+    // MARK: - Variables
+
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var voiceIOMeter: LevelMeterView!
@@ -62,6 +64,9 @@ class ViewController: UIViewController {
         case play = "Play"
         case stop = "Stop"
     }
+
+    
+    // MARK: - Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()

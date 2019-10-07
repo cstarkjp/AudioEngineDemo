@@ -43,6 +43,8 @@ protocol AudioLevelProvider {
  */
 class LevelMeterView: UIView {
     
+    // MARK: - Variables
+    
     private struct ColorThreshold {
         let color: UIColor
         let maxValue: CGFloat
@@ -103,6 +105,9 @@ class LevelMeterView: UIView {
     // Class providing audio meter data needs to adopt AudioLevelProvider.
     var levelProvider: AudioLevelProvider?
     
+    
+    // MARK: - Methods
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

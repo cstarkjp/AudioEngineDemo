@@ -24,6 +24,9 @@ import Accelerate
  Compute the audio "power" or volume.
  */
 class PowerMeter: AudioLevelProvider {
+    
+    // MARK: - Variables
+
     private let kMinLevel: Float = 0.000_000_01 //-160 dB
 
     private struct PowerLevels {
@@ -42,6 +45,8 @@ class PowerMeter: AudioLevelProvider {
                            peakLevel: meterTablePeak.valueForPower(values[0].peak))
     }
     
+    // MARK: - Methods
+
     func processSilence() {
         if values.isEmpty { return }
         values = []
