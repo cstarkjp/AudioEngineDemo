@@ -81,6 +81,7 @@ class AudioEngine {
         avAudioEngine.attach(recordedFilePlayer)
         print("Record file URL: \(recordedFileURL.absoluteString)")
         
+        // Figure out a sample rate & number of audio channels
         let hwSampleRate = AVAudioSession.sharedInstance().sampleRate
         let sampleRate: Double
         if desiredSampleRate != nil {
@@ -92,6 +93,8 @@ class AudioEngine {
         print( "Specified sample rate = \(String(describing: desiredSampleRate)) => \(hwSampleRate)" )
         print( "Number of audio channels = \(AVAudioSession.sharedInstance().inputNumberOfChannels)" )
 
+        // Set the audio mic input & speaker output & file parameters
+        // Must be non-interleaved.
         guard let tempAudioFormat = AVAudioFormat( commonFormat: .pcmFormatFloat32,
                                                    sampleRate: sampleRate,
                                                    channels: nChannels,

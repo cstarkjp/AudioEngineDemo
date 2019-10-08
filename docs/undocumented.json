@@ -17,28 +17,28 @@
     {
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/AudioEngine.swift",
       "line": 39,
-      "symbol": "AudioEngine.nMicTapBuffer",
+      "symbol": "AudioEngine.nBuffer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/AudioEngine.swift",
+      "line": 52,
+      "symbol": "AudioEngine.audioFormat",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/AudioEngine.swift",
       "line": 53,
-      "symbol": "AudioEngine.voiceIOFormat",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/AudioEngine.swift",
-      "line": 54,
       "symbol": "AudioEngine.isRecording",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/AudioEngine.swift",
-      "line": 55,
-      "symbol": "AudioEngine.voiceIOPowerMeter",
+      "line": 54,
+      "symbol": "AudioEngine.volumeMeter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -102,27 +102,6 @@
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/MeterTable.swift",
       "line": 63,
       "symbol": "MeterTable.valueForPower(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/PowerMeter.swift",
-      "line": 42,
-      "symbol": "PowerMeter.levels",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/PowerMeter.swift",
-      "line": 50,
-      "symbol": "PowerMeter.processSilence()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/PowerMeter.swift",
-      "line": 56,
-      "symbol": "PowerMeter.process(buffer:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -214,6 +193,27 @@
       "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/ViewController.swift",
       "line": 207,
       "symbol": "ViewController.handleMediaServicesWereReset(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/VolumeMeter.swift",
+      "line": 42,
+      "symbol": "VolumeMeter.levels",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/VolumeMeter.swift",
+      "line": 50,
+      "symbol": "VolumeMeter.processSilence()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/colinstark/Code/PhoneticsDev/AudioEngineDemo/AudioEngineDemo/VolumeMeter.swift",
+      "line": 56,
+      "symbol": "VolumeMeter.process(buffer:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
